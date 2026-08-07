@@ -1,0 +1,43 @@
+// Ultrasonic Sensor Interfacing with Arduino UNO
+// HC-SR04
+// Trig -> D10
+// Echo -> D9
+
+int trig = 10;
+int echo = 9;
+long duration;
+int cm;
+
+void setup()
+{
+    pinMode(trig, OUTPUT);
+    pinMode(echo, INPUT);
+
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    // Generate ultrasonic pulse
+    digitalWrite(trig, LOW);
+    delayMicroseconds(10);
+
+    digitalWrite(trig, HIGH);
+    delayMicroseconds(10);
+
+    digitalWrite(trig, LOW);
+    delayMicroseconds(10);
+
+    // Read echo time
+    duration = pulseIn(echo, HIGH);
+
+    // Calculate distance
+    cm = (duration / 2) * 0.034;
+
+    // Display distance
+    Serial.print("Distance = ");
+    Serial.print(cm);
+    Serial.println(" cm");
+
+    delay(500);
+}
